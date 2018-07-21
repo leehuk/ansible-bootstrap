@@ -3,7 +3,7 @@
 # devenv.sh
 # Bootstraps an ansible setup for the windows-devenv provisioned environment.
 # Uses a private gitlab repo which contain various ansible configuration files,
-# which are combined with a public github repo of playbooks and roles.
+# which are combined with a public github repo of tasks and helpers.
 # 
 # This script runs an initial set of ansible recipes:
 # - apply network configuration
@@ -20,7 +20,7 @@ apikey=$2
 user=$3
 
 ansible_dir="/store/ansible"
-ansible_playbooks='/.ansible/ansible-playbooks'
+ansible_scripts='/.ansible/ansible-scripts'
 ansible_private='/.ansible/ansible-private'
 ssh_dir="/store/ssh/$user"
 
@@ -55,16 +55,16 @@ if [[ ! -d "$ansible_private/host_vars/$server" ]]; then
     fail "Unable to find ansible host_vars directory for $server"
 fi
 
-if [[ ! -d "$ansible_playbooks" ]]; then
-    git clone -q https://github.com/leehuk/ansible-playbooks.git "$ansible_playbooks" || fail
+if [[ ! -d "$ansible_scripts" ]]; then
+    git clone -q https://github.com/leehuk/ansible-scripts.git "$ansible_scripts" || fail
 fi
 
 # Setup our ansible bootstrapping directory
 mkdir -p /.ansible/bootstrap/
 dosym "$ansible_private/hosts/$server" /.ansible/bootstrap/hosts
 dosym "$ansible_private/host_vars" /.ansible/bootstrap/host_vars
-dosym "$ansible_playbooks/playbooks" /.ansible/bootstrap/playbooks
-dosym "$ansible_playbooks/roles" /.ansible/bootstrap/playbooks/roles
+dosym "$ansible_scripts/scripts" /.ansible/bootstrap/playbooks
+dosym "$ansible_scripts/roles" /.ansible/bootstrap/playbooks/roles
 
 # Now run our bootstrapping
 cd /.ansible/bootstrap
@@ -133,8 +133,8 @@ fi
 # the bind mounts into /etc/ansible/
 run_bootstrap=0
 
-if [[ ! -d "$ansible_dir/ansible-playbooks" ]]; then
-	sudo -iu $user git clone git@github.com:leehuk/ansible-playbooks.git $ansible_dir/ansible-playbooks || fail "Error: Failed to checkout ansible"
+if [[ ! -d "$ansible_dir/ansible-scripts" ]]; then
+	sudo -iu $user git clone git@github.com:leehuk/ansible-scripts.git $ansible_dir/ansible-scripts || fail "Error: Failed to checkout ansible"
 	run_bootstrap=1
 fi
 
