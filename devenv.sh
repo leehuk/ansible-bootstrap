@@ -148,6 +148,11 @@ if [[ $run_bootstrap -ne 0 ]]; then
 	ansible-playbook -i hosts playbooks/role-runner.yml -e host="$server" -e role=core_diskmgmt
 fi
 
+# Now install any scripts etc
+for i in ansible-role; do
+    cp "$ansible_dir/ansible-scripts/bin/$i" "/usr/bin/$i"
+done
+
 # We are done with /.ansible at this point, so clean it up
 rm -rf /.ansible
 
