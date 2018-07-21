@@ -63,7 +63,7 @@ fi
 mkdir -p /.ansible/bootstrap/
 dosym "$ansible_private/hosts/$server" /.ansible/bootstrap/hosts
 dosym "$ansible_private/host_vars" /.ansible/bootstrap/host_vars
-dosym "$ansible_scripts/scripts" /.ansible/bootstrap/playbooks
+dosym "$ansible_scripts/playbooks" /.ansible/bootstrap/playbooks
 dosym "$ansible_scripts/roles" /.ansible/bootstrap/playbooks/roles
 
 # Now run our bootstrapping
