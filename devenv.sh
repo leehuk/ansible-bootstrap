@@ -123,6 +123,10 @@ if [[ ! -f "$ssh_dir/id_gitlab" ]]; then
 	echo
 fi
 
+# Run the authorized_keys configuration, now we have any ssh bind mounts
+ansible-playbook -i hosts playbooks/role-runner.yml -e host="$server" -e role=security_authorized_keys
+
+# Start setting up production ansible location
 if [[ ! -d "$ansible_dir" ]]; then
 	mkdir -p $ansible_dir || fail "Failed to create $ansible_dir"
 	chown $user: $ansible_dir || fail "Failed to set ownership of $ansible_dir"
