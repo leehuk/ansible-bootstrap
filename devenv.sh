@@ -166,7 +166,7 @@ ansible-playbook playbooks/base.yml
 ansible-playbook playbooks/base-devenv.yml
 
 # And now we've bootstrapped, we need to reboot.
-echo "Reboot required.
+echo "Reboot required."
 read -s -p "Press enter to continue."
 
 sudo /sbin/shutdown -r now
