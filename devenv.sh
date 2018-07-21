@@ -160,6 +160,11 @@ done
 # We are done with /.ansible at this point, so clean it up
 rm -rf /.ansible
 
+# Now run full ansible configuration
+cd /etc/ansible
+ansible-playbook playbooks/base.yml
+ansible-playbook playbooks/base-devenv.yml
+
 # And now we've bootstrapped, we need to reboot.
 echo "Reboot required.
 read -s -p "Press enter to continue."
