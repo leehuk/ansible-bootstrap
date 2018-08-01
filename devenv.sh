@@ -68,6 +68,7 @@ dosym "$ansible_scripts/roles" /.ansible/bootstrap/playbooks/roles
 
 # Now run our bootstrapping
 cd /.ansible/bootstrap
+ansible-playbook -i hosts playbooks/role-runner.yml -e host="$server" -e role=service_bind
 ansible-playbook -i hosts playbooks/role-runner.yml -e host="$server" -e role=core_network
 ansible-playbook -i hosts playbooks/role-runner.yml -e host="$server" -e role=core_users
 ansible-playbook -i hosts playbooks/role-runner.yml -e host="$server" -e role=core_sudo
